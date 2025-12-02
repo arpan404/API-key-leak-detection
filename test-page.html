@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Leak Detector - Test Page</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: #f8fafc;
+        }
+
+        h1 {
+            color: #1e293b;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #64748b;
+            margin-bottom: 30px;
+        }
+
+        .code-section {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .code-section h2 {
+            color: #334155;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        pre {
+            background: #1e293b;
+            color: #f1f5f9;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        code {
+            font-family: 'Courier New', monospace;
+        }
+
+        .warning {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        .warning strong {
+            color: #92400e;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🔒 Security Leak Detector - Test Page</h1>
+    <p class="subtitle">This page contains sample code with intentional security leaks for testing purposes.</p>
+
+    <div class="warning">
+        <strong>⚠️ Warning:</strong> All API keys and secrets on this page are fake examples for testing only. Never use
+        real credentials in test files!
+    </div>
+
+    <div class="code-section">
+        <h2>AWS Credentials</h2>
+        <pre><code>// AWS Configuration
+const AWS_ACCESS_KEY_ID = "AKIAIOSFODNN7EXAMPLE";
+const AWS_SECRET_ACCESS_KEY = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY";
+
+// Initialize AWS SDK
+const aws = require('aws-sdk');
+aws.config.update({
+  accessKeyId: AWS_ACCESS_KEY_ID,
+  secretAccessKey: AWS_SECRET_ACCESS_KEY,
+  region: 'us-east-1'
+});</code></pre>
+    </div>
+
+    <div class="code-section">
+        <h2>GitHub Token</h2>
+        <pre><code>// GitHub API Configuration
+const GITHUB_TOKEN = "ghp_1234567890abcdefghijklmnopqrstuv";
+const GITHUB_OAUTH = "gho_abcdefghijklmnopqrstuvwxyz123456";
+
+fetch('https://api.github.com/user', {
+  headers: {
+    'Authorization': `token ${GITHUB_TOKEN}`
+  }
+});</code></pre>
+    </div>
+
+    <div class="code-section">
+        <h2>Google API Key</h2>
+        <pre><code>// Google Maps Configuration
+const GOOGLE_API_KEY = "AIzaSyDaGmWKa4JsXZ-HjGw7ISLn_3namBGewQe";
+
+const script = document.createElement('script');
+script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_API_KEY}`;
+document.head.appendChild(script);</code></pre>
+    </div>
+
+    <div class="code-section">
+        <h2>Database Connection String</h2>
+        <pre><code>// MongoDB Connection
+const MONGO_URI = "mongodb://admin:password123@cluster0.mongodb.net/mydb?retryWrites=true";
+
+// PostgreSQL Connection
+const PG_CONNECTION = "postgresql://user:secretpassword@localhost:5432/database";
+
+mongoose.connect(MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});</code></pre>
+    </div>
+
+    <div class="code-section">
+        <h2>Slack Webhook</h2>
+        <pre><code>// Slack Integration
+const SLACK_WEBHOOK = "https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX";
+const SLACK_TOKEN = "xoxb-1234567890-1234567890123-abcdefghijklmnopqrstuvwx";
+
+fetch(SLACK_WEBHOOK, {
+  method: 'POST',
+  body: JSON.stringify({ text: 'Hello from app!' })
+});</code></pre>
+    </div>
+
+    <div class="code-section">
+        <h2>Stripe API Keys</h2>
+        <pre><code>// Stripe Configuration
+const STRIPE_SECRET_KEY = "sk_live_51AbCdEfGhIjKlMnOpQrStUvWxYz1234567890AbCdEfGhIjKl";
+const STRIPE_PUBLISHABLE_KEY = "pk_live_51AbCdEfGhIjKlMnOpQrStUvWxYz1234567890AbCdEfGhIjKl";
+
+const stripe = require('stripe')(STRIPE_SECRET_KEY);</code></pre>
+    </div>
+
+    <div class="code-section">
+        <h2>JWT Token</h2>
+        <pre><code>// Authentication Token
+const JWT_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
+
+fetch('/api/protected', {
+  headers: {
+    'Authorization': `Bearer ${JWT_TOKEN}`
+  }
+});</code></pre>
+    </div>
+
+    <div class="code-section">
+        <h2>Private Key</h2>
+        <pre><code>// SSH Private Key
+const SSH_KEY = `-----BEGIN OPENSSH PRIVATE KEY-----
+b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAABFwAAAAdzc2gtcn
+NhAAAAAwEAAQAAAQEAr0...
+-----END OPENSSH PRIVATE KEY-----`;
+
+// RSA Private Key
+const RSA_KEY = `-----BEGIN RSA PRIVATE KEY-----
+MIIEpAIBAAKCAQEAr0...
+-----END RSA PRIVATE KEY-----`;</code></pre>
+    </div>
+
+    <div class="code-section">
+        <h2>Generic Secrets</h2>
+        <pre><code>// Application Configuration
+const config = {
+  api_key: "sk_test_4eC39HqLyjWDarjtT1zdp7dc",
+  api_secret: "my_super_secret_key_12345",
+  password: "admin123password",
+  secret: "this_is_a_very_secret_value"
+};
+
+// Environment Variables
+process.env.API_KEY = "1234567890abcdefghijklmnopqrstuvwxyz";
+process.env.SECRET_TOKEN = "super_secret_token_value_here";</code></pre>
+    </div>
+
+    <div class="code-section">
+        <h2>SendGrid API Key</h2>
+        <pre><code>// SendGrid Email Service
+const SENDGRID_API_KEY = "SG.1234567890abcdefghij.klmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(SENDGRID_API_KEY);</code></pre>
+    </div>
+
+    <div class="code-section">
+        <h2>Universal AI Keys</h2>
+        <pre><code>// OpenAI / Anthropic Style Keys
+const OPENAI_KEY = "sk-proj-1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOP";
+const ANTHROPIC_KEY = "sk-ant-api03-abcdefghijklmnopqrstuvwxyz1234567890-ABCDEF";
+
+// Generic High Entropy
+const SOME_API_KEY = "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0";</code></pre>
+    </div>
+
+    <div class="code-section">
+        <h2>Heroku API Key</h2>
+        <pre><code>// Heroku Platform API
+const HEROKU_API_KEY = "12345678-1234-1234-1234-123456789abc";
+const heroku_api_key = "abcdef01-2345-6789-abcd-ef0123456789";
+
+// Heroku API Request
+fetch('https://api.heroku.com/apps', {
+  headers: {
+    'Authorization': 'Bearer 87654321-4321-4321-4321-ba9876543210',
+    'Accept': 'application/vnd.heroku+json; version=3'
+  }
+});</code></pre>
+    </div>
+
+    <script>
+        console.log('Test page loaded. Open the Security Leak Detector extension to see detected leaks.');
+    </script>
+    <script src="test-script.js"></script>
+</body>
+
+</html>

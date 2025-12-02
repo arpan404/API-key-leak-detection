@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Security Leak Detector</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🔒 Security Leak Detector</h1>
+      <p class="subtitle">Protecting your sensitive data</p>
+    </header>
+
+    <div id="stats" class="stats">
+      <div class="stat-card critical">
+        <div class="stat-number" id="critical-count">0</div>
+        <div class="stat-label">Critical</div>
+      </div>
+      <div class="stat-card high">
+        <div class="stat-number" id="high-count">0</div>
+        <div class="stat-label">High</div>
+      </div>
+      <div class="stat-card medium">
+        <div class="stat-number" id="medium-count">0</div>
+        <div class="stat-label">Medium</div>
+      </div>
+      <div class="stat-card low">
+        <div class="stat-number" id="low-count">0</div>
+        <div class="stat-label">Low</div>
+      </div>
+    </div>
+
+    <div id="detections-container">
+      <h2>Detected Leaks</h2>
+      <div id="detections-list"></div>
+    </div>
+
+    <div id="no-detections" class="no-detections" style="display: none;">
+      <div class="success-icon">✓</div>
+      <p>No security leaks detected on this page</p>
+    </div>
+
+    <footer>
+      <p class="scan-time" id="scan-time"></p>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
