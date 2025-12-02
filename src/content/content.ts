@@ -5,6 +5,22 @@ import { Detection, ScanResult } from '../types';
 const scanner = new SecurityScanner();
 let allDetections: Detection[] = [];
 const scannedUrls = new Set<string>();
+const uniqueDetectionKeys = new Set<string>();
+
+/**
+ * Adds detections if they haven't been seen before
+ */
+function addUniqueDetections(detections: Detection[]): void {
+    detections.forEach(detection => {
+        // Create a unique key for the detection
+        const key = `${detection.type}|${detection.source}|${detection.line}|${detection.column}|${detection.match}`;
+
+        if (!uniqueDetectionKeys.has(key)) {
+            uniqueDetectionKeys.add(key);
+            allDetections.push(detection);
+        }
+    });
+}
 
 /**
  * Scans code blocks on the page
@@ -25,11 +41,16 @@ async function scanCodeBlocks(): Promise<void> {
     const codeElements = document.querySelectorAll(codeSelectors.join(', '));
 
     codeElements.forEach((element) => {
+        // Skip if already scanned
+        if ((element as HTMLElement).dataset.securityScanned === 'true') {
+            return;
+        }
+
         const detections = scanner.scanElement(element);
 
         if (detections.length > 0) {
             // Add detections to global list
-            allDetections.push(...detections);
+            addUniqueDetections(detections);
 
             // Highlight the element
             highlightElement(element as HTMLElement, detections);
@@ -66,7 +87,7 @@ async function scanExternalScripts(): Promise<void> {
             const detections = scanner.scan(text, src);
 
             if (detections.length > 0) {
-                allDetections.push(...detections);
+                addUniqueDetections(detections);
                 console.log(`Found ${detections.length} leaks in ${src}`);
             }
         } catch (error) {
@@ -200,6 +221,7 @@ function init(): void {
 
     // Reset detections
     allDetections = [];
+    uniqueDetectionKeys.clear();
 
     // Scan immediately
     scanCodeBlocks();
