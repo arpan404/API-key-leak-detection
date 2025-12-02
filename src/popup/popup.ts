@@ -109,7 +109,7 @@ function createDetectionItem(detection: Detection): HTMLElement {
  */
 function showNoDetections(): void {
     document.getElementById('detections-container')!.style.display = 'none';
-    document.getElementById('no-detections')!.style.display = 'block';
+    document.getElementById('no-detections')!.style.display = 'flex';
 
     // Reset stats
     document.getElementById('critical-count')!.textContent = '0';
@@ -126,14 +126,57 @@ function displayScanTime(timestamp: number): void {
 
     if (timestamp) {
         const date = new Date(timestamp);
-        const timeStr = date.toLocaleTimeString();
-        scanTime.textContent = `Last scanned: ${timeStr}`;
+        const now = new Date();
+        const diffMs = now.getTime() - date.getTime();
+        const diffMins = Math.floor(diffMs / 60000);
+
+        let timeStr: string;
+        if (diffMins < 1) {
+            timeStr = 'Just now';
+        } else if (diffMins < 60) {
+            timeStr = `${diffMins}m ago`;
+        } else {
+            timeStr = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        }
+
+        scanTime.textContent = timeStr;
     } else {
-        scanTime.textContent = 'No scan performed yet';
+        scanTime.textContent = 'Not scanned';
+    }
+}
+
+/**
+ * Rescan current page
+ */
+async function rescanPage(): Promise<void> {
+    const refreshBtn = document.getElementById('refresh-btn') as HTMLButtonElement;
+    refreshBtn.disabled = true;
+
+    try {
+        const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+        if (tab.id) {
+            // Send message to content script to rescan
+            await chrome.tabs.sendMessage(tab.id, { action: 'rescan' });
+
+            // Wait a bit for the scan to complete
+            setTimeout(() => {
+                loadResults();
+                refreshBtn.disabled = false;
+            }, 500);
+        }
+    } catch (error) {
+        console.error('Error rescanning page:', error);
+        refreshBtn.disabled = false;
     }
 }
 
 // Initialize popup
 document.addEventListener('DOMContentLoaded', () => {
     loadResults();
+
+    // Add rescan button handler
+    const refreshBtn = document.getElementById('refresh-btn');
+    if (refreshBtn) {
+        refreshBtn.addEventListener('click', rescanPage);
+    }
 });

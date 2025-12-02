@@ -92,18 +92,6 @@ aws.config.update({
 });</code></pre>
     </div>
 
-    <div class="code-section">
-        <h2>GitHub Token</h2>
-        <pre><code>// GitHub API Configuration
-const GITHUB_TOKEN = "ghp_1234567890abcdefghijklmnopqrstuv";
-const GITHUB_OAUTH = "gho_abcdefghijklmnopqrstuvwxyz123456";
-
-fetch('https://api.github.com/user', {
-  headers: {
-    'Authorization': `token ${GITHUB_TOKEN}`
-  }
-});</code></pre>
-    </div>
 
     <div class="code-section">
         <h2>Google API Key</h2>
@@ -189,15 +177,6 @@ const config = {
 // Environment Variables
 process.env.API_KEY = "1234567890abcdefghijklmnopqrstuvwxyz";
 process.env.SECRET_TOKEN = "super_secret_token_value_here";</code></pre>
-    </div>
-
-    <div class="code-section">
-        <h2>SendGrid API Key</h2>
-        <pre><code>// SendGrid Email Service
-const SENDGRID_API_KEY = "SG.1234567890abcdefghij.klmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-const sgMail = require('@sendgrid/mail');
-sgMail.setApiKey(SENDGRID_API_KEY);</code></pre>
     </div>
 
     <div class="code-section">
